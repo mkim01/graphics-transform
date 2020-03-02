@@ -10,47 +10,51 @@ z0  z1  ... zn
 import math
 
 def make_translate( x, y, z ):
-    t_matrix = new_matrix()
-    ident(t_matrix)
-    t_matrix[0][3]= x
-    t_matrix[1][3]= y
-    t_matrix[2][3]= z
-    return t_matrix
+    matrix = new_matrix()
+    ident(matrix)
+    matrix[3][0] = x
+    matrix[3][1] = y
+    matrix[3][2] = z
+    return matrix
 
 def make_scale( x, y, z ):
-    s_matrix = new_matrix()
-    ident(s_matrix)
-    s_matrix[0][0] = x
-    s_matrix[1][1] = y
-    s_matrix[2][2] = z
-    return s_matrix
+    matrix = new_matrix()
+    ident(matrix)
+    matrix[0][0] = x
+    matrix[1][1] = y
+    matrix[2][2] = z
+    return matrix
 
 def make_rotX( theta ):
-    rX_matrix = new_matrix()
-    ident(rX_matrix)
-    rX_matrix[1][1] = cos(theta)
-    rX_matrix[1][2] = -sin(theta)
-    rX_matrix[2][1] = sin(theta)
-    rX_matrix[2][2] = cos(theta)
-    return rX_matrix
+    rad = theta * math.pi / 180
+    matrix = new_matrix()
+    ident(matrix)
+    matrix[1][1] = math.cos(rad)
+    matrix[2][1] = -1 * math.sin(rad)
+    matrix[1][2] = math.sin(rad)
+    matrix[2][2] = math.cos(rad)
+    return matrix
 
 def make_rotY( theta ):
-    rY_matrix = new_matrix()
-    ident(rY_matrix)
-    rY_matrix[0][0] = cos(theta)
-    rY_matrix[0][2] = -sin(theta)
-    rY_matrix[2][0] = -sin(theta)
-    rY_matrix[2][2] = cos(theta)
-    return rY_matrix
+    radians = theta * math.pi / 180
+    matrix = new_matrix()
+    ident(matrix)
+    matrix[0][0] = math.cos(radians)
+    matrix[2][0] = math.sin(radians)
+    matrix[0][2] = -1 *math.sin(radians)
+    matrix[2][2] = math.cos(radians)
+    return matrix
 
 def make_rotZ( theta ):
-    rZ_matrix = new_matrix()
-    ident(rZ_matrix)
-    rZ_matrix[0][0] = cos(theta)
-    rZ_matrix[0][1] = -sin(theta)
-    rZ_matrix[1][0] = -sin(theta)
-    rZ_matrix[1][1] = cos(theta)
-    return rZ_matrix
+    radians = theta * math.pi / 180
+    matrix = new_matrix()
+    ident(matrix)
+    matrix[0][0] = math.cos(radians)
+    matrix[1][0] = -1 * math.sin(radians)
+    matrix[0][1] = math.sin(radians)
+    matrix[1][1] = math.cos(radians)
+    return matrix
+
 
 #print the matrix such that it looks like
 #the template in the top comment
