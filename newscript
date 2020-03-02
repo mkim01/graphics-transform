@@ -1,0 +1,61 @@
+line
+25 0 0 50 0 0
+line
+50 0 0 60 25 0
+line
+60 25 0 50 50 0
+line
+50 50 0 25 50 0
+line
+25 50 0 15 25 0
+line
+15 25 0 25 0 0
+
+line
+25 0 25 50 0 25
+line
+50 0 25 60 25 25
+line
+60 25 25 50 50 25
+line
+50 50 25 25 50 25
+line
+25 50 25 15 25 25
+line
+15 25 25 25 0 25
+
+line
+25 0 0 25 0 25
+line
+50 0 0 50 0 25
+line
+60 25 0 60 25 25
+line
+50 50 0 50 50 25
+line
+25 50 0 25 50 25
+line
+15 25 0 15 25 25
+
+ident
+scale
+4 4 4
+apply
+
+ident
+move
+150 -400 -250
+apply
+
+ident
+rotate
+z 90
+rotate
+x 40
+rotate
+y 20
+apply
+
+display
+save
+pic.png
