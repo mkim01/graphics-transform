@@ -2,34 +2,57 @@ from display import *
 from matrix import *
 from draw import *
 
-"""
-Goes through the file named filename and performs all of the actions listed in that file.
-The file follows the following format:
-     Every command is a single character that takes up a line
-     Any command that requires arguments must have those arguments in the second line.
-     The commands are as follows:
-         line: add a line to the edge matrix -
-               takes 6 arguemnts (x0, y0, z0, x1, y1, z1)
-         ident: set the transform matrix to the identity matrix -
-         scale: create a scale matrix,
-                then multiply the transform matrix by the scale matrix -
-                takes 3 arguments (sx, sy, sz)
-         translate: create a translation matrix,
-                    then multiply the transform matrix by the translation matrix -
-                    takes 3 arguments (tx, ty, tz)
-         rotate: create a rotation matrix,
-                 then multiply the transform matrix by the rotation matrix -
-                 takes 2 arguments (axis, theta) axis should be x y or z
-         apply: apply the current transformation matrix to the edge matrix
-         display: clear the screen, then
-                  draw the lines of the edge matrix to the screen
-                  display the screen
-         save: clear the screen, then
-               draw the lines of the edge matrix to the screen
-               save the screen to a file -
-               takes 1 argument (file name)
-         quit: end parsing
-See the file script for an example of the file format
-"""
+
 def parse_file( fname, points, transform, screen, color ):
-    pass
+    f = open(fname, "r")
+    lines = f.readlines()
+    lines = [s.strip() for s in lines]
+    i = 0
+    while (i < len(lines)):
+        if lines[i] == "line":
+            i = i + 1
+            endpoints = lines[i].split(" ")
+            endpoints = [int(x) for x in endpoints]
+            add_edge(points, endpoints[0], endpoints[1], endpoints[2], endpoints[3], endpoints[4], endpoints[5])
+        if lines[i] == "ident":
+            ident(transform)
+        if lines[i] == "scale":
+            i = i + 1
+            args = lines[i].split(" ")
+            args = [int(x) for x in args]
+            new = make_scale(args[0], args[1], args[2])
+            matrix_mult(new, transform)
+        if lines[i] == "move":
+            i = i + 1
+            args = lines[i].split(" ")
+            args = [int(x) for x in args]
+            new = make_translate(args[0], args[1], args[2])
+            matrix_mult(new, transform)
+        if lines[i] == "rotate":
+            i = i + 1
+            args = lines[i].split(" ")
+            theta = int(args[1])
+            # print(theta)
+            if args[0] == "x":
+                new = make_rotX(theta)
+            if args[0] == "y":
+                new = make_rotY(theta)
+            if args[0] == "z":
+                new = make_rotZ(theta)
+            matrix_mult(new, transform)
+        if lines[i] == "apply":
+            matrix_mult(transform, points)
+        if lines[i] == "display":
+            clear_screen(screen)
+            draw_lines(points, screen, color)
+            display(screen)
+        if lines[i] == "save":
+            i = i + 1
+            clear_screen(screen)
+            draw_lines(points, screen, color)
+            save_ppm(screen, "image.ppm")
+            save_extension(screen, lines[i])
+        if lines[i] == "quit":
+            break
+        i = i + 1
+    f.close()
